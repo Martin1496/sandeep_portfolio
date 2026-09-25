@@ -1,0 +1,7 @@
+import Link from "next/link";
+import Image from "next/image";
+import {ArrowUpRight} from "lucide-react";
+import type {Project} from "@/lib/portfolio";
+export default function ProjectCard({project,index,compact=false}:{project:Project;index:number;compact?:boolean}){
+ return <Link className={`project-card reveal accent-${project.accent} ${project.screenshots?.length?"has-proof":""} ${compact?"concept-card":""}`} href={`/projects/${project.slug}`}><div className={`project-art ${project.slug==="pharmacy-desk"?"desktop-shot":"website-shot"}`}>{project.screenshots?.length?<><Image className="project-cover-image" src={project.screenshots[0].src} alt={project.screenshots[0].alt} width={1920} height={1080} unoptimized/><div className="project-proof-label">{project.slug==="pharmacy-desk"?"EARLIER DESKTOP DEMO":"PROJECT WEBSITE"}</div></>:<><div className="project-art-top"><span>{project.symbol}</span><span>{project.status} / {project.year}</span></div><div className="project-art-center"><span className="project-art-orbit"/><strong>{project.name}</strong><small>{project.category}</small></div><div className="project-art-bottom"><span>{project.stack.slice(0,3).join(" · ")}</span><ArrowUpRight size={20}/></div></>}</div><div className="project-card-info"><span className="overline">{String(index+1).padStart(2,"0")} / {project.status}</span><h3>{project.name}</h3><p>{project.summary}</p><span className="project-read">View screens & story <ArrowUpRight size={17}/></span></div></Link>
+}

@@ -1,0 +1,4 @@
+"use client";
+import {useState} from "react";
+import {skillGroups} from "@/lib/portfolio";
+export default function ToolsExplorer(){const [active,setActive]=useState("All");const groups=active==="All"?skillGroups:skillGroups.filter(g=>g.name===active);return <><div className="filter-row" role="group" aria-label="Filter technology categories">{["All",...skillGroups.map(g=>g.name)].map(n=><button key={n} aria-pressed={active===n} className={active===n?"filter active":"filter"} onClick={()=>setActive(n)}>{n}</button>)}</div><div className="skill-grid">{groups.map(group=><article className="skill-card" key={group.name}><div className="skill-icon" aria-hidden="true">{group.icon}</div><h2>{group.name}</h2><p>{group.description}</p><div className="skill-list">{group.items.map(item=><span key={item}>{item}</span>)}</div></article>)}</div></>}

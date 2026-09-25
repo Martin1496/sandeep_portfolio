@@ -1,0 +1,9 @@
+"use client";
+import {useState} from "react";
+import {ArrowUpRight} from "lucide-react";
+const email="sandeepdusadh07@gmail.com";
+export default function ContactForm(){
+ const [sent,setSent]=useState(false),[form,setForm]=useState({name:"",reply:"",project:"",timeline:""});
+ function submit(e:React.FormEvent<HTMLFormElement>){e.preventDefault();const subject=encodeURIComponent(`Portfolio enquiry from ${form.name}`),body=encodeURIComponent(`Name: ${form.name}\nEmail: ${form.reply}\nBudget or timeline: ${form.timeline||"Not specified"}\n\nProject details:\n${form.project}`);window.location.href=`mailto:${email}?subject=${subject}&body=${body}`;setSent(true)}
+ return <form className="contact-form" onSubmit={submit}><div className="form-row"><label>Your name<input required autoComplete="name" maxLength={100} value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="How should I address you?"/></label><label>Email address<input required autoComplete="email" type="email" maxLength={150} value={form.reply} onChange={e=>setForm({...form,reply:e.target.value})} placeholder="you@company.com"/></label></div><label>What are you building?<textarea required rows={5} maxLength={3000} value={form.project} onChange={e=>setForm({...form,project:e.target.value})} placeholder="Tell me about your idea, problem, or existing product"/></label><label>Budget or timeline <span className="optional">OPTIONAL</span><input maxLength={160} value={form.timeline} onChange={e=>setForm({...form,timeline:e.target.value})} placeholder="For example: next month"/></label><button type="submit" className="button">Prepare email <ArrowUpRight size={18}/></button><p className="form-note">Your email app will open with this message filled in. Review it and press Send there.</p>{sent&&<p role="status" className="form-note success">Draft prepared. If nothing opened, send your message to <a href={`mailto:${email}`}>{email}</a>.</p>}</form>
+}
